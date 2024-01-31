@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Organizador de Pedidos</title>
+</head>
+<body>
+    <div class="form-container">
+        <h2>Formulário de Pedido</h2>
+        <input type="text" id="nome" placeholder="Nome">
+        <input type="text" id="telefone" placeholder="Telefone">
+        <textarea id="descricao" placeholder="Descrição do Pedido"></textarea>
+        <input type="date" id="data">
+        <button onclick="submitForm()">Enviar</button>
+    </div>
+
+    <div id="pedidos"></div>
+
+    <script>
+    var pedidos = [];
+
+    function submitForm() {
+        var nome = document.getElementById('nome').value;
+        var telefone = document.getElementById('telefone').value;
+        var descricao = document.getElementById('descricao').value;
+        var data = document.getElementById('data').value;
+
+        var pedido = {
+            nome: nome,
+            telefone: telefone,
+            descricao: descricao,
+            data: data
+        };
+
+        pedidos.push(pedido);
+        displayPedidos();
+    }
+
+    function removePedido(index) {
+        pedidos.splice(index, 1);
+        displayPedidos();
+    }
+
+    function displayPedidos() {
+        var containerPedidos = document.getElementById('pedidos');
+        containerPedidos.innerHTML = '';
+
+        for (var i = 0; i < pedidos.length; i++) {
+            var pedido = pedidos[i];
+            var div = document.createElement('div');
+            div.className = 'pedido';
+            div.innerHTML = '<h3>' + pedido.nome + '</h3>' +
+                            '<p>Telefone: ' + pedido.telefone + '</p>' +
+                            '<p>Descrição do Pedido: ' + pedido.descricao + '</p>' +
+                            '<p>Data: ' + pedido.data + '</p>' +
+                            '<button onclick="removePedido(' + i + ')">Remover Pedido</button>';
+            containerPedidos.appendChild(div);
+        }
+    }
+    </script>
+</body>
+</html>
